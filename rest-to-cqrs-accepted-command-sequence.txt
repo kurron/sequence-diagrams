@@ -1,0 +1,21 @@
+title Accepted Command Sequence
+
+Client->API Gateway: POST /commands/{id}
+API Gateway->Command Log: proposed command 
+note over API Gateway,Command Log: placed in the pending queue
+API Gateway->Client: 202 ACCEPTED
+Command Log->Command Processor: proposed command
+Command Processor-> Canonnical Datastore: new state
+Command Processor->Command Log: accepted command
+note over Command Processor,Command Log: placed in the accepted queue
+Command Log-->Arbitrary Action: accepted command
+Arbitrary Action-->Command Log: arbitrary event
+note over Arbitrary Action,Command Log: arbitrary topic or queue
+Command Log->API Gateway: accepted command 
+API Gateway->Client: GET /updates
+note over API Gateway,Client: could be web sockets
+Client->API Gateway: GET /query
+API Gateway-> Canonical Datastore: data query
+note over API Gateway,Canonical Datastore: probably delegates to another service
+Canonical Datastore->API Gateway: data
+API Gateway->Client: 200 OK

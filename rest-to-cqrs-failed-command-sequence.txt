@@ -1,0 +1,15 @@
+title Failed Command Sequence
+
+Client->API Gateway: POST /commands/{id}
+API Gateway->Command Log: proposed command 
+note over API Gateway,Command Log: placed in the pending queue
+API Gateway->Client: 202 ACCEPTED
+Command Log->Command Processor: proposed command
+Command Processor->Command Log: failed command
+note over Command Processor,Command Log: placed in the failed queue
+Command Log-->Arbitrary Action: failed command
+Arbitrary Action-->Command Log: arbitrary event
+note over Arbitrary Action,Command Log: arbitrary topic or queue
+Command Log->API Gateway: failed command 
+API Gateway->Client: GET /updates
+note over API Gateway,Client: could be web sockets
