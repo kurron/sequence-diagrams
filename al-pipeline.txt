@@ -1,0 +1,11 @@
+title AL CI Pipeline
+
+Developer->Stash: Code Push
+Stash->Bamboo: Peer Reviewed Code
+note over Bamboo,Image Repository: unit & integration tested
+Bamboo->Image Repository: Docker image
+Image Repository->Integration Host: Docker image
+note over Image Repository,Integration Host: reverted if system tests fail
+Bamboo->Integration Host: System Test
+note over Image Repository,Edge Host: only deployed if system tests pass
+Image Repository->Edge Host: Docker image
