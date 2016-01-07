@@ -1,0 +1,12 @@
+title PDF Generation Sequence
+
+
+note over Mold-E,Print-E: send data and template id
+Mold-E->Print-E: PUT /build-pdf/{template-id}
+Print-E->Template Store: GET /template/{template-id}
+Print-E->Magni: GET /{image-id}
+Print-E->Magni: GET /{audio-id}
+Print-E->Magni: PUT/pdf/{pdf-id}
+Mold-E->Magni: GET /pdf/{pdf-id}
+note over Mold-E,Magni: alternatively, block until Print-E is done and have it return the PDF
+
