@@ -1,0 +1,20 @@
+title Sush-E PDF Generation Sequence
+
+note left of Sush-E
+    use of PUT is to indicate idempotency
+    we probably want to use an asynchronous model to deal with latency
+    
+    1) embedded assets are placed into temporary storage
+    2) data blob references those assets
+    3) data blob and template are combined into a PDF
+    4) resulting PDF is placed into temporary storage for pickup
+end note
+
+Sush-E->Magni: PUT /{image-id}
+Sush-E->Magni: PUT /{audio-id}
+Sush-E->Print-E: PUT /build-pdf/{template-id}
+Print-E->Template Store: GET /template/{template-id}
+Print-E->Magni: GET /{image-id}
+Print-E->Magni: GET /{audio-id}
+Print-E->Magni: PUT/pdf/{pdf-id}
+Sush-E->Magni: GET /pdf/{pdf-id}
