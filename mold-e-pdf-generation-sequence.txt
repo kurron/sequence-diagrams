@@ -1,0 +1,19 @@
+title Mold-E PDF Generation Sequence
+
+note over UI,Coordinator
+01) UI asks for a PDF report to be generated
+02) UI polls until the PDF is available
+03) Coordinator kicks off report data generation
+04) Coordinator polls until report data is available
+05) Coordinator tells Print-E to construct the PDF
+05) Print-E places PDF into temporary storage
+06) UI grabs the PDF
+end note
+
+UI->Coordinator: PUT /report/{report-id}
+Coordinator->Mold-E: PUT /report-data/{job-id}
+Coordinator->Mold-E: GET /job-status/{job-id}
+Coordinator->Print-E: PUT /build-pdf/{template-id}
+Print-E->Template Store: GET /template/{template-id}
+Print-E->Magni: PUT /report/{report-id}
+UI->Magni: GET /pdf/{pdf-id}
