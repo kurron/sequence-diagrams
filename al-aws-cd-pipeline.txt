@@ -1,0 +1,8 @@
+title AL AWS Continuous Deployment  Pipeline
+
+Bamboo->Integration Host: System Test
+Bamboo->Artifactory: Docker Compose Descriptor
+Bamboo->Rundeck: Descriptor Coordinates
+QA->Rundeck: deployment request
+Rundeck->Artifactory: Desciptor Fragments
+Rundeck->Amazon: Fully Assembled AL Descriptor
