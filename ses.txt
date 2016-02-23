@@ -1,0 +1,12 @@
+title Simple E-Mail Service
+
+API Client->SES (Inbound): PUT /message/{md5}
+SES (Inbound)->RabbitMQ: Command
+SES (Inbound)->API Client: 206 Accepted
+
+RabbitMQ -> SES (Outbound): Command
+note over RabbitMQ,SES (Outbound): workers pull commands as quickly as possible
+SES (Outbound)->AWS: E-Mail Message
+
+note over SES (Inbound),SES (Outbound): a single service with 2 logical halves
+ 
