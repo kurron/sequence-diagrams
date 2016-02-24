@@ -1,0 +1,15 @@
+title Docker Compose Descriptor Pipeline
+
+Bamboo->Fragment Registry: Docker Compose Fragment
+note over Bamboo,Fragment Registry: module-0.0.0.MILESTONE, [AL,MOLD-E,GE]
+
+User->Rundeck: Deployment Request
+Rundeck->Fragment Registry: asks for a list of applications
+Fragment Registry->Rundeck: ["AL", "MOLD-E", "GE"]
+Rundeck->Fragment Registry: asks for a list of releases for the selected application
+Fragment Registry->Rundeck: ["RELEASE", "MILESTONE", "RC"]
+Rundeck->Fragment Registry: asks for a list of versions for selected release
+Fragment Registry->Rundeck: ["AL-1.0.1.RELEASE", "AL-1.0.2.RELEASE"]
+Rundeck->Fragment Registry: asks for the selected Docker Compose descriptor 
+Fragment Registry->Rundeck: AL-1.0.1.RELEASE
+Rundeck->AWS: Docker Compose descriptor 
