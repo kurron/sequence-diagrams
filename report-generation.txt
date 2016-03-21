@@ -1,0 +1,16 @@
+title Report Generation
+
+TLO Client->Report Service: PUT /command/generate
+Report Service->TLO Client: 202 Accepted
+note over TLO Client,Report Service: claim tickets
+Report Service->MongoDB: aggregations
+Report Service->RabbitMQ: artifact generation Command
+note over Report Service,RabbitMQ: command contains reporting data
+RabbitMQ -> HTML Generator: Command
+RabbitMQ -> PDF Generator: Command
+RabbitMQ -> CSV Generator: Command
+HTML Generator -> BLOB Storage: HTML artifact
+PDF Generator -> BLOB Storage: PDF artifact
+CSV Generator -> BLOB Storage: CSV artifact
+TLO Client -> BLOB Storage: artifacts
+note over TLO Client,BLOB Storage: websockets or polling
