@@ -1,15 +1,25 @@
-title Docker Compose Descriptor Pipeline
+title Docker Container Descriptor Pipeline
 
-Bamboo->Fragment Registry: Docker Compose Fragment
-note over Bamboo,Fragment Registry: module-0.0.0.MILESTONE, [AL,MOLD-E,GE]
+Human->Git: Stack Definition
+note over Human,Git: Adds a new stack: TLO
 
-User->Rundeck: Deployment Request
-Rundeck->Fragment Registry: asks for a list of applications
-Fragment Registry->Rundeck: ["AL", "MOLD-E", "GE"]
-Rundeck->Fragment Registry: asks for a list of releases for the selected application
-Fragment Registry->Rundeck: ["RELEASE", "MILESTONE", "RC"]
-Rundeck->Fragment Registry: asks for a list of versions for selected release
-Fragment Registry->Rundeck: ["AL-1.0.1.RELEASE", "AL-1.0.2.RELEASE"]
-Rundeck->Fragment Registry: asks for the selected Docker Compose descriptor 
-Fragment Registry->Rundeck: AL-1.0.1.RELEASE
-Rundeck->AWS: Docker Compose descriptor 
+Human->Git: Code Modification
+Git->Bamboo: Code Mondification
+
+Bamboo->RabbitMQ: Container Descriptor
+note over Bamboo,RabbitMQ: stacks: [TLO,AL]
+RabbitMQ->Descriptor Registry: Container Descriptor
+note over RabbitMQ,Descriptor Registry: stacks: [TLO,AL]
+
+Descriptor Registry->RabbitMQ: Stack Entry
+note over Descriptor Registry,RabbitMQ: stack: [TLO]
+RabbitMQ->Stack Publisher: Stack Entry
+note over RabbitMQ,Stack Publisher: stack: [TLO]
+
+Stack Publisher->Git: Stack Folder
+note over Stack Publisher,Git: creates folder TLO/0.0.1
+
+Rancher->Git: Catalog Folder
+note over Rancher,Git: Rancher autodetects update to Git
+Human->Rancher: Deploys Stack
+note over Human,Rancher: TLO 0.0.1 is now a deployment option
