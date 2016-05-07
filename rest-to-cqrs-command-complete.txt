@@ -1,0 +1,19 @@
+title Command Sequence
+
+Client->API Gateway: PUT /commands/{id}
+note over Client,API Gateway: id is a digest of the sent command
+API Gateway->Command Queue: proposed state transition
+note over API Gateway,Command Queue: leaves a reply-to address
+Command Queue->Command Processor: proposed state transition
+Command Processor->Command Log: proposed state transition
+Command Processor-->Persistent State: transition state
+note over Command Processor,Persistent State: transition contains the command id that caused the transition
+Command Processor->Command Log: proposed state transition
+note over Command Processor,Command Log: mark the command as processed
+Command Processor->Event Log: event
+note over Command Processor,Event Log: record of what took place
+Command Processor->Event Queue: notification of what took place
+Command Processor->API Gateway: processing results
+API Gateway->Client: processing results
+Event Queue->Arbitrary Action: react to event
+

@@ -1,0 +1,20 @@
+title Query Sequence
+
+Projection Processor->Event Queue: react to state transition
+note over Projection Processor,Event Queue: result of a Command
+
+Projection Processor->Persistent Storage: projection
+note over Projection Processor,Persistent Storage: apply the change to the projection
+
+Client->API Gateway: GET /view/{id}
+note over Client,API Gateway: id is the desired projection
+
+API Gateway->Projection Processor: desired projection
+Projection Processor->Persistent Storage: projection
+
+API Gateway->Event Log: projection request processed
+note over API Gateway,Event Log: client 123 requested projection 456
+
+Projection Processor->API Gateway: desired projection
+API Gateway->Client: desired projection
+
