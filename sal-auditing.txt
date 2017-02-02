@@ -1,0 +1,17 @@
+title Auditing Interaction Sequence
+
+participant TLO
+participant LDS
+participant Mold-E
+participant RabbitMQ
+participant Auditor
+participant SAL
+
+TLO->RabbitMQ: PUSH auditing event
+LDS->RabbitMQ: PUSH auditing event
+Mold-E->RabbitMQ: PUSH auditing event
+
+RabbitMQ->Auditor: PULL auditing event
+
+Auditor->SAL: make API call
+
