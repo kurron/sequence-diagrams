@@ -1,5 +1,6 @@
 title Auditing Interaction Sequence
 
+participant S3
 participant TLO
 participant LDS
 participant Mold-E
@@ -7,6 +8,7 @@ participant RabbitMQ
 participant Auditor
 participant SAL
 
+S3->RabbitMQ: PUSH auditing event
 TLO->RabbitMQ: PUSH auditing event
 LDS->RabbitMQ: PUSH auditing event
 Mold-E->RabbitMQ: PUSH auditing event
