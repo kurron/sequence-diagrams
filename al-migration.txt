@@ -1,0 +1,40 @@
+title Data Migration Sequence
+
+loop Translate Records Into Import Commands
+    Mapper->TLO Database: database record
+    opt Read Failure
+        Mapper->Redis: failure details
+    end
+    Mapper->Command Queue: import command
+end
+
+loop Process Import Commands
+    Command Queue->Importer: import command
+    Importer->Redis: find AL mapping to TLO entity
+    Importer->AL: API call
+    opt API Call Failure
+        Importer->Redis: failure details
+    end
+    Importer->Verify Queue: import event
+    Importer->Index Queue: import event
+    Importer->Redis: register import command as being processed
+end
+
+loop Maintain TLO To AL Index
+    Index Queue->Indexer: import event
+    Indexer->Redis: mapping of TLO entities to AL entities
+    Indexer->Redis: register event as being processed
+end
+
+loop Verify Equivalence
+    Verify Queue->Verifier: import event
+    Verifier->AL: AL record
+    Verifier->TLO Database: TLO record
+    Verifier->Redis: TLO to AL mappings
+    Verifier->Redis: equivalency verified
+    opt Equivalency Test Failed
+        Verifier->Redis: discrepency information
+    end
+    Verifier->Redis: register event as being processed
+end
+
