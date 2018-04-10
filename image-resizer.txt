@@ -1,4 +1,4 @@
-title Image Resizer Sequence
+tle Image Resizer Sequence
 
 WEBDAM->Web Hook: Asset change notification
 Web Hook->SQS: Asset change event
@@ -12,5 +12,6 @@ alt Client specified the 1024x1024 image
     CloudFront->API Client:1024x1024 image
 else Client specifed a non-1024x1024 image
     CloudFront->Image Resizer: fetch specified image
-    Image Resizer->API Client: non-1024x1024 image
+    Image Resizer->CloudFront: non-1024x1024 image
+    CloudFront->API Client:non-1024x1024 image
 end
