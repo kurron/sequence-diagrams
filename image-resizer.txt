@@ -9,6 +9,8 @@ API Client->CloudFront: Image reqeust with size parameters
 
 alt Client specified the 1024x1024 image
     CloudFront->S3: fetch specified image
+    CloudFront->API Client:1024x1024 image
 else Client specifed a non-1024x1024 image
     CloudFront->Image Resizer: fetch specified image
+    Image Resizer->API Client: non-1024x1024 image
 end
