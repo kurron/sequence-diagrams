@@ -1,0 +1,13 @@
+title ADP Event Sequence
+
+Tracking Pixel->API Gateway: Tracking request
+note right of Tracking Pixel: GET and POST supported
+API Gateway->Enricher: Tracking request
+note right of Enricher: adds additonal fields to the request
+Enricher->Kinesis: enriched request
+Kinesis->Kinesis Firehose: enriched request
+Kinesis Firehose->Transformer: enriched request
+Transformer->S3: Tracking request in CSV form
+S3->SQS: new arrival message
+Snowpipe->SQS: new arrival message
+Snowpipe->Snowflake: new record
