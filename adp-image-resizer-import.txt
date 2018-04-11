@@ -1,0 +1,8 @@
+title Image Resizer Sequence (import)
+
+WEBDAM->SQS: Asset change event
+Asset Copier->SQS: Asset change event
+Asset Copier->WEBDAM: 1024x1024 image
+Asset Copier->S3: 1024x1024 image
+note right of Asset Copier: TIFF is too large to store 
+
