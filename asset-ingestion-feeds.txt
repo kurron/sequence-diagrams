@@ -1,0 +1,16 @@
+title Asset Ingestion Sequence (Feeds)
+
+Product Feed->S3: feed file
+Product Rankings->S3: feed file
+Buyer's Pick->S3: feed file
+S3->SQS: feed updated event
+Feed Ingestor->SQS: feed updated event
+S3->Feed Ingestor: feed file
+Scylla->Feed Ingestor: feed to asset mapping rules
+note over Feed Ingestor,Scylla: rules are used to extract data from feed
+Scylla->Feed Ingestor: current feed state
+note over Feed Ingestor,Scylla:new and current feed states are merged
+Feed Ingestor->Scylla: store merged feed state
+Feed Ingestor->Elasticsearch: indexed asset meta-data
+note over Feed Ingestor,Elasticsearch: enriches asset meta-data with feed information
+
