@@ -1,8 +1,9 @@
 title Asset Ingestion Sequence (WEBDAM)
 
 WEBDAM->SQS: Asset change notification
-WEBDAM Ingestor->SQS: Asset change notification
+SQS->WEBDAM Ingestor: Asset change notification
+Scylla->WEBDAM Ingestor: Current feed state
 WEBDAM Ingestor->ADP: Asset meta-data
-note right of WEBDAM Ingestor: enriches information
-ADP->ElasticSearch: index ADP information
+note over WEBDAM Ingestor,ADP: enriches using feed information
+ADP->ElasticSearch: index asset information
 
