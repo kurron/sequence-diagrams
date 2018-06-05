@@ -1,0 +1,9 @@
+title Supplier DB Sequence
+
+ADP Feed Ingestion->SQS: "new SKUs" message
+note right of ADP Feed Ingestion: nightly batch process
+SQS->ADP Supplier Ingestion: "new SKUs" message
+ADP Supplier Ingestion->Supplier Elasticsearch: fetch asset metadata
+note right of ADP Supplier Ingestion: transform raw metadata into ADP form
+ADP Supplier Ingestion->ADP Elasticsearch: store asset metadata
+
