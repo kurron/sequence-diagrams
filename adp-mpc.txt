@@ -1,0 +1,14 @@
+title MPC Integration Sequence
+
+loop every 15 minutes
+    Poller->MPC: Ask for new events
+    MPC->Poller: Collection of unseen and unacknowledged events
+end
+loop extract individual events from the collection
+    Poller->SQS: single event record
+    Poller->MPC: change event state to "in work"
+end
+SQS->Feed Processor: single event record
+Feed Processor->ADP: product metadata
+Feed Processor->MPC: change event state to "acknowledged"
+
