@@ -1,0 +1,10 @@
+title Image Verification Sequence
+
+Asset Ingestion->ADP API: New/updated asset data
+Asset Ingestion->Queue: asset id
+Queue->Image Verifier: asset id
+Image Store->Image Verifier: image
+alt actual dimension differ from recorded
+Image Verifier->ADP API: updated dimension data
+Image Verifier->ADP API: audit information
+note over Image Verifier, ADP API: record that dimensions needed correcting
