@@ -1,0 +1,28 @@
+title Asset Ingestion Sequence
+alt pull-based feed
+    Nightly Job->Batch Partner: CSV file
+    Nightly Job->S3: CSV file
+else push-based feed
+    Batch Partner->S3: CSV file
+end
+
+S3->SQS: upload event
+SQS->CSV Processor: upload event
+CSV Processor->S3: load CSV file
+
+loop convert CSV records into JSON documents
+    CSV Processor->SQS: individual feed records (JSON)
+end
+
+Streaming Partner->SQS: asset change event
+SQS->Streaming Processor: asset change event
+Streaming Processor->Streaming Partner: asset information
+Streaming Processor->SQS: feed record (JSON)
+
+loop import idividual feed records
+    SQS->Record Processor: individual feed records (JSON)
+    Record Processor->DynamoDB: store feed record entry in table
+    opt if unseen feed record
+        Record Processor->ADP: create/update asset
+    end
+end
