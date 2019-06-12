@@ -1,0 +1,8 @@
+title ADP Data Import/Export Sequence
+
+Feed Processor->DynamoDB: Feedonomics data
+Feed Processor->DynamoDB: Buyer's Pick data
+Webdam->DynamoDB: New/Update/Delete asset data
+DynamoDB->Lambda: New/Update/Delete notifications
+Lambda->Elasticsearch: Create/Update/Delete searchable assets
+Lambda->Snowflake: Create/Update/Delete ML data
